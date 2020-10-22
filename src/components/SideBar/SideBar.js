@@ -28,7 +28,14 @@ const useStyles = makeStyles((theme) => ({
     justifyContent: 'flex-end',
   },
   listItem: {
-    backgroundColor: theme.palette.secondary.main
+    backgroundColor: theme.palette.secondary.main,
+    color: 'white',
+    borderTop: `1px solid ${theme.palette.secondary.main}`,
+    borderBottom: `1px solid ${theme.palette.secondary.main}`,
+    '&:hover': {
+      backgroundColor: 'white',
+      color: theme.palette.secondary.main,
+    }
   }
 }));
 
