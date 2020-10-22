@@ -3,6 +3,7 @@ import Modal from '@material-ui/core/Modal';
 import Backdrop from '@material-ui/core/Backdrop';
 import { Container, makeStyles } from '@material-ui/core';
 
+import axios from '../../config/axios';
 import IdeaForm from '../../components/IdeaForm/IdeaForm';
 
 const useStyles = makeStyles((theme) => ({
