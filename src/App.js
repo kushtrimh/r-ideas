@@ -1,17 +1,19 @@
 import React from 'react';
 
+import { ThemeProvider } from '@material-ui/core/styles';
+
 import Layout from './containers/Layout/Layout';
-import IdeaManager from './containers/IdeaManager/IdeaManager';
-import MainBoard from './components/MainBoard/MainBoard';
+
+import theme from './themes/theme';
 
 function App() {
   return (
-    <div className="App">
-      <Layout>
-        <IdeaManager />
-        <MainBoard />
-      </Layout>
-    </div>
+    <ThemeProvider theme={theme}>
+      <div className="App">
+        <Layout>
+        </Layout>
+      </div>
+    </ThemeProvider>
   );
 }
 
