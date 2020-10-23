@@ -18,13 +18,15 @@ const IdeaForm = (props) => {
   const classes = useStyles();
 
   return (
-    <form className={classes.root}>
+    <form className={classes.root} onSubmit={props.submitIdea}>
       <TextField  
         required
         fullWidth
-        placeholder="Title" 
+        placeholder="Title"
+        label={props.errors.title.message}
         value={props.idea.title}
         className={classes.textField}
+        error={props.errors.title.error}
         onChange={(e) => props.changeIdeaAttribute(e, 'title')} />
       <TextField
         required
@@ -33,12 +35,14 @@ const IdeaForm = (props) => {
         className={classes.textField}
         value={props.idea.content}
         multiline={true}
+        label={props.errors.content.message}
+        error={props.errors.content.error}
         rows={5}
         variant="outlined"
         onChange={(e) => props.changeIdeaAttribute(e, 'content')} />
 
       <Button 
-        variant="contained" color="primary">
+        variant="contained" color="primary" disabled={!props.submitButtonEnabled}>
         Add Idea
       </Button>
     </form>
