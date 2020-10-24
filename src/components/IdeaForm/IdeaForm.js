@@ -18,27 +18,33 @@ const IdeaForm = (props) => {
   const classes = useStyles();
 
   return (
-    <form className={classes.root}>
-      <TextField  
+    <form className={classes.root} onSubmit={props.submit}>
+      <TextField 
+        name="title"
         required
         fullWidth
-        placeholder="Title" 
+        placeholder="Title"
+        label={props.errors.title.message}
         value={props.idea.title}
         className={classes.textField}
-        onChange={(e) => props.changeIdeaAttribute(e, 'title')} />
+        error={props.errors.title.showError}
+        onChange={props.changeAttribute} />
       <TextField
+        name="content"
         required
         fullWidth
         placeholder="Content"
         className={classes.textField}
         value={props.idea.content}
         multiline={true}
+        label={props.errors.content.message}
+        error={props.errors.content.showError}
         rows={5}
         variant="outlined"
-        onChange={(e) => props.changeIdeaAttribute(e, 'content')} />
+        onChange={props.changeAttribute} />
 
       <Button 
-        variant="contained" color="primary">
+        variant="contained" color="primary" disabled={!props.submitEnabled}>
         Add Idea
       </Button>
     </form>
