@@ -25,9 +25,9 @@ const IdeaForm = (props) => {
         fullWidth
         placeholder="Title"
         label={props.errors.title.message}
+        error={props.errors.title.message}
         value={props.idea.title}
         className={classes.textField}
-        error={props.errors.title.showError}
         onChange={props.changeAttribute} />
       <TextField
         name="content"
@@ -35,14 +35,13 @@ const IdeaForm = (props) => {
         fullWidth
         placeholder="Content"
         className={classes.textField}
-        value={props.idea.content}
         multiline={true}
         label={props.errors.content.message}
-        error={props.errors.content.showError}
+        error={props.errors.content.message}
+        value={props.idea.content}
         rows={5}
         variant="outlined"
         onChange={props.changeAttribute} />
-
       <Button 
         variant="contained" color="primary" disabled={!props.submitEnabled}>
         Add Idea

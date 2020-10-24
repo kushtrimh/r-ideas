@@ -37,11 +37,9 @@ const IdeaManager = (props) => {
 
   const [ideaErrors, setIdeaErrors] = useState({
     title: {
-      showError: false,
       message: ''
     },
     content: {
-      showError: false,
       message: ''
     }
   });
@@ -62,10 +60,9 @@ const IdeaManager = (props) => {
 
   const updateIdeaValidationErrors = (name, value) => {
     const errors = {...ideaErrors};
-    const errorMessage = validateIdea(name, value);
+    const message = validateIdea(name, value);
     errors[name] = {
-      showError: errorMessage !== null,
-      message: errorMessage
+      message: message
     }
     setIdeaErrors(errors);
   }
