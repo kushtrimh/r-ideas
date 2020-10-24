@@ -37,33 +37,22 @@ const IdeaManager = (props) => {
 
   const [ideaErrors, setIdeaErrors] = useState({
     title: {
-      error: true,
+      showError: false,
       message: ''
     },
     content: {
-      error: true,
+      showError: false,
       message: ''
     }
   });
 
-  const formUsed = useRef(false);
-  const [addButtonEnabled, setAddButtonEnabled] = useState(false);
-
-
-  useEffect(() => {
-    console.log('w');
-    const isValid = formUsed.current ? Object.entries(ideaErrors).map(errorEntry => errorEntry[1].error)
-      .every(value => !value) : false;
-      formUsed.current = true;
-    setAddButtonEnabled(isValid);
-  }, [ideaErrors]);
-
-  const handleIdeaAttributeChange = (e, attribute) => {
+  const handleIdeaAttributeChange = (e) => {
+    const name = e.target.name;
     const value = e.target.value;
-    validateIdea(attribute, value);
+    updateIdeaValidationErrors(name, value);
     setIdea({
       ...idea,
-      [attribute]: value,
+      [name]: value,
     })
   }
 
@@ -71,34 +60,39 @@ const IdeaManager = (props) => {
     
   }
 
+  const updateIdeaValidationErrors = (name, value) => {
+    const errors = {...ideaErrors};
+    const errorMessage = validateIdea(name, value);
+    errors[name] = {
+      showError: errorMessage !== null,
+      message: errorMessage
+    }
+    setIdeaErrors(errors);
+  }
 
   const validateIdea = (name, value) => {
-    const errors = {...ideaErrors};
+    let error = null;
     switch (name) {
       case 'title':
-        errors.title.error = true;
         if (value.length <= 0) {
-          errors.title.message = 'Title is required';
+          error = 'Title is required';
         } else if (value.length > 250) {
-          errors.title.message = 'Title should be less than 250 characters';
-        } else {
-          errors.title.error = false;
-          errors.title.message = '';
+          error = 'Title should be less than 250 characters';
         }
         break;
       case 'content':
-        errors.content.error = true;
         if (value.length <= 0) {
-          errors.content.message = 'Content is required';
-        } else {
-          errors.content.error = false;
-          errors.content.message = '';
+          error = 'Content is required';
         }
         break;
       default:
-        break;
     }
-    setIdeaErrors(errors);
+    return error;
+  }
+
+  const isValid = () => {
+    return Object.entries(ideaErrors).map(errorEntry => errorEntry[1].message)
+      .every(message => message === null);
   }
 
   return (
@@ -117,9 +111,9 @@ const IdeaManager = (props) => {
           <IdeaForm 
             idea={idea}
             errors={ideaErrors}
-            changeIdeaAttribute={handleIdeaAttributeChange}
-            submitIdea={handleIdeaSubmit}
-            submitButtonEnabled={addButtonEnabled} />
+            changeAttribute={handleIdeaAttributeChange}
+            submit={handleIdeaSubmit}
+            submitEnabled={isValid()} />
         </div>
       </Container>
     </Modal>
