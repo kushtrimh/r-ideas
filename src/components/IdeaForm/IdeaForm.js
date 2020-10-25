@@ -13,7 +13,7 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
-const IdeaForm = (props) => {
+function IdeaForm(props) {
 
   const classes = useStyles();
 
@@ -25,7 +25,7 @@ const IdeaForm = (props) => {
         fullWidth
         placeholder="Title"
         label={props.errors.title.message}
-        error={props.errors.title.message}
+        error={Boolean(props.errors.title.message)}
         value={props.idea.title}
         className={classes.textField}
         onChange={props.changeAttribute} />
@@ -37,7 +37,7 @@ const IdeaForm = (props) => {
         className={classes.textField}
         multiline={true}
         label={props.errors.content.message}
-        error={props.errors.content.message}
+        error={Boolean(props.errors.content.message)}
         value={props.idea.content}
         rows={5}
         variant="outlined"

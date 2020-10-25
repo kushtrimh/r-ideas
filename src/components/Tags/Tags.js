@@ -1,6 +1,6 @@
 import React from 'react';
 
-const Tags = (props) => {
+function Tags(props) {
   return (
     <div>
 

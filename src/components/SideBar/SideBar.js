@@ -39,7 +39,7 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
-const SideBar = (props) => {
+function SideBar(props) {
 
   const classes = useStyles(props);
 

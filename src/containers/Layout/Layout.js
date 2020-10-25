@@ -38,25 +38,25 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
-const Layout = (props) => {
+function Layout(props) {
 
   const classes = useStyles();
   const [drawerOpen, setDrawerOpen] = useState(true);
   const [addIdeaModalOpen, setAddIdeaModalOpen] = useState(false);
 
-  const handleDrawerOpen = () => {
+  function handleDrawerOpen() {
     setDrawerOpen(true);
   }
 
-  const handleDrawerClose = () => {
+  function handleDrawerClose() {
     setDrawerOpen(false)
   }
 
-  const handleAddIdeaModalOpen = () => {
+  function handleAddIdeaModalOpen() {
     setAddIdeaModalOpen(true);
   }
 
-  const handleAddIdeaModalClose = () => {
+  function handleAddIdeaModalClose() {
     setAddIdeaModalOpen(false);
   }
 

@@ -1,9 +1,8 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState } from 'react';
 import Modal from '@material-ui/core/Modal';
 import Backdrop from '@material-ui/core/Backdrop';
 import { Container, makeStyles } from '@material-ui/core';
 
-import axios from '../../config/axios';
 import IdeaForm from '../../components/IdeaForm/IdeaForm';
 
 const useStyles = makeStyles((theme) => ({
@@ -23,18 +22,15 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
-const IdeaManager = (props) => {
+function IdeaManager(props) {
   
   const classes = useStyles();
-  
-  const [ideas, setIdeas] = useState([]);
-
+  // const [ideas, setIdeas] = useState([]);
   const [idea, setIdea] = useState({
     title: '',
     content: '',
     createdAt: null,
   });
-
   const [ideaErrors, setIdeaErrors] = useState({
     title: {
       message: ''
@@ -44,7 +40,7 @@ const IdeaManager = (props) => {
     }
   });
 
-  const handleIdeaAttributeChange = (e) => {
+  function handleIdeaAttributeChange(e) {
     const name = e.target.name;
     const value = e.target.value;
     updateIdeaValidationErrors(name, value);
@@ -54,11 +50,11 @@ const IdeaManager = (props) => {
     })
   }
 
-  const handleIdeaSubmit = () => {
+  function handleIdeaSubmit() {
     
   }
 
-  const updateIdeaValidationErrors = (name, value) => {
+  function updateIdeaValidationErrors(name, value) {
     const errors = {...ideaErrors};
     const message = validateIdea(name, value);
     errors[name] = {
@@ -67,7 +63,7 @@ const IdeaManager = (props) => {
     setIdeaErrors(errors);
   }
 
-  const validateIdea = (name, value) => {
+  function validateIdea(name, value) {
     let error = null;
     switch (name) {
       case 'title':
@@ -87,7 +83,7 @@ const IdeaManager = (props) => {
     return error;
   }
 
-  const isValid = () => {
+  function isValid() {
     return Object.entries(ideaErrors).map(errorEntry => errorEntry[1].message)
       .every(message => message === null);
   }
