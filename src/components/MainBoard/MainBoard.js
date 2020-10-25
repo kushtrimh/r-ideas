@@ -1,6 +1,6 @@
 import React from 'react';
 
-const MainBoard = () => {
+function MainBoard() {
   return (
     <div></div>
   );
