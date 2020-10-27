@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 
 import { Route, Switch, useRouteMatch } from 'react-router-dom';
 
-import IdeaForm from '../components/ideas/IdeaForm';
+import IdeaForm from './IdeaForm';
 
 function IdeaManager(props) {
   
