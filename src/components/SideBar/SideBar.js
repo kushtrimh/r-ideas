@@ -1,15 +1,11 @@
 import React from 'react';
 
-import Drawer from '@material-ui/core/Drawer';
-import Divider from '@material-ui/core/Divider';
-import List from '@material-ui/core/List';
-import ListItem from '@material-ui/core/ListItem';
-import ListItemText from '@material-ui/core/ListItemText';
-import IconButton from '@material-ui/core/IconButton';
-import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
-import { makeStyles } from '@material-ui/core';
+import { Link as RouterLink } from 'react-router-dom';
+import { Button, Divider, Drawer, IconButton,
+   makeStyles, withStyles, Typography, Link } from '@material-ui/core';
+import { ChevronLeft } from '@material-ui/icons';
 
-import Tags from '../Tags/Tags';
+import Tags from '../tags/Tags';
 
 const useStyles = makeStyles((theme) => ({
   drawer: props => ({
@@ -27,21 +23,42 @@ const useStyles = makeStyles((theme) => ({
     ...theme.mixins.toolbar,
     justifyContent: 'flex-end',
   },
-  listItem: {
-    backgroundColor: theme.palette.secondary.main,
-    color: 'white',
-    borderTop: `1px solid ${theme.palette.secondary.main}`,
-    borderBottom: `1px solid ${theme.palette.secondary.main}`,
-    '&:hover': {
-      backgroundColor: 'white',
-      color: theme.palette.secondary.main,
-    }
+  buttonContainer: {
+    marginTop: theme.spacing(2),
   }
 }));
+
+const SideBarButton = withStyles((theme) => ({
+  root: {
+    display: 'block',
+    margin: `${theme.spacing(1)}px auto`,
+    textDecoration: 'none',
+    width: 'max-content'
+  }
+}))(Button);
 
 function SideBar(props) {
 
   const classes = useStyles(props);
+
+  const buttons = [
+    {color: 'primary', text: 'Posts', to: '/posts'},
+    {color: 'secondary', text: 'Add New Post', to: '/posts/add'}
+  ].map(button => (
+    <SideBarButton
+      variant="contained"
+      color={button.color}>
+      <Link 
+        to={button.to}
+        component={RouterLink}>
+        <Typography
+          align="center"
+          variant="button">
+          {button.text}
+        </Typography>
+      </Link>
+    </SideBarButton>
+  ));
 
   return (
     <Drawer
@@ -54,23 +71,14 @@ function SideBar(props) {
       }}>
       <div className={classes.drawerHeader}>
         <IconButton onClick={props.closeDrawer}>
-          <ChevronLeftIcon />
+          <ChevronLeft color="secondary" />
         </IconButton>
       </div>
       <Divider />
-      <List>
-        {['Add New Idea'].map((text, index) => (
-          <ListItem 
-            button 
-            key={text}
-            className={classes.listItem}
-            onClick={props.openAddIdeaModal}>
-            <ListItemText primary={text} />
-          </ListItem>
-        ))}
-        <Divider />
-        <Tags />
-      </List>
+      <div className={classes.buttonContainer}>
+        {buttons}
+      </div>
+      <Tags />
     </Drawer>
   )
 };
