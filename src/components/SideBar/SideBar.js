@@ -1,8 +1,10 @@
 import React from 'react';
 
 import { Link as RouterLink } from 'react-router-dom';
-import { Button, Divider, Drawer, IconButton,
-   makeStyles, withStyles, Typography, Link } from '@material-ui/core';
+import {
+  Button, Divider, Drawer, IconButton,
+  makeStyles, withStyles, Typography, Link
+} from '@material-ui/core';
 import { ChevronLeft } from '@material-ui/icons';
 
 import Tags from '../tags/Tags';
@@ -42,22 +44,23 @@ function SideBar(props) {
   const classes = useStyles(props);
 
   const buttons = [
-    {color: 'primary', text: 'Posts', to: '/posts'},
-    {color: 'secondary', text: 'Add New Post', to: '/posts/add'}
+    { color: 'primary', text: 'Posts', to: '/posts' },
+    { color: 'secondary', text: 'Add New Post', to: '/posts/add' }
   ].map(button => (
-    <SideBarButton
-      variant="contained"
-      color={button.color}>
-      <Link 
-        to={button.to}
-        component={RouterLink}>
+    <Link
+      key={button.to}
+      to={button.to}
+      component={RouterLink}>
+      <SideBarButton
+        variant="contained"
+        color={button.color}>
         <Typography
           align="center"
           variant="button">
           {button.text}
         </Typography>
-      </Link>
-    </SideBarButton>
+      </SideBarButton>
+    </Link>
   ));
 
   return (
