@@ -7,7 +7,7 @@ import {
 } from '@material-ui/core';
 import { ChevronLeft } from '@material-ui/icons';
 
-import Tags from '../tags/Tags';
+import Tags from './tags/Tags';
 
 const useStyles = makeStyles((theme) => ({
   drawer: props => ({
@@ -44,8 +44,8 @@ function SideBar(props) {
   const classes = useStyles(props);
 
   const buttons = [
-    { color: 'primary', text: 'Posts', to: '/posts' },
-    { color: 'secondary', text: 'Add New Post', to: '/posts/add' }
+    { color: 'primary', text: 'Ideas', to: '/ideas' },
+    { color: 'secondary', text: 'Add New Idea', to: '/ideas/add' }
   ].map(button => (
     <Link
       key={button.to}
