@@ -10,9 +10,11 @@ function IdeaManager(props) {
   const match = useRouteMatch();
 
   return (
-    <Switch>
-      <Route path={`${match.url}/add`} component={IdeaForm} />
-    </Switch>
+    <React.Fragment>
+      <p>awhat</p>
+      <Switch>
+      </Switch>
+    </React.Fragment>
   );
 };
 
