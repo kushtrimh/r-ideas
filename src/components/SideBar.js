@@ -7,7 +7,7 @@ import {
 } from '@material-ui/core';
 import { ChevronLeft } from '@material-ui/icons';
 
-import Tags from './tagsfl/Tags';
+import Tags from './tags/Tags';
 
 const useStyles = makeStyles((theme) => ({
   drawer: props => ({
