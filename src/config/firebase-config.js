@@ -28,7 +28,7 @@ export default firebase;
 export function useDatabase() {
   const [database, setDatabase] = useState(null);
   if (!database) {
-    const newDatabase = firebase.database()
+    const newDatabase = firebase.database();
     setDatabase(newDatabase);
     return newDatabase;
   }
