@@ -1,3 +1,5 @@
+import { useState } from 'react';
+
 import firebase from 'firebase/app';
 
 import 'firebase/auth';
@@ -21,7 +23,14 @@ const firebaseConfig = {
 
 firebase.initializeApp(firebaseConfig);
 
-const database = firebase.database();
-
 export default firebase;
-export { database };
+
+export function useDatabase() {
+  const [database, setDatabase] = useState(null);
+  if (!database) {
+    const newDatabase = firebase.database()
+    setDatabase(newDatabase);
+    return newDatabase;
+  }
+  return database;
+}

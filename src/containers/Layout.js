@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import { Switch, Route, Redirect } from 'react-router-dom';
 import { makeStyles } from '@material-ui/core';
 import SideBar from '../components/SideBar';
-import IdeaManager from './IdeaManager';
+import Ideas from './Ideas';
 import IdeaForm from './IdeaForm';
 import ApplicationBar from '../components/ApplicationBar';
 
@@ -54,22 +54,16 @@ function Layout(props) {
 
   return (
     <div className={classes.root}>
-      <ApplicationBar
-        shift={handleDrawerOpen}
-        shifted={drawerOpen} />
-      <SideBar
-        open={drawerOpen}
-        closeDrawer={handleDrawerClose}
-        width={DRAWER_WIDTH} />
+      <ApplicationBar shift={handleDrawerOpen} shifted={drawerOpen} />
+      <SideBar open={drawerOpen} closeDrawer={handleDrawerClose} width={DRAWER_WIDTH} />
       <main className={[classes.content, drawerOpen ? classes.contentShift : null].join(' ')}>
         <div className={classes.header}></div>
         <Switch>
           <Route path="/ideas/add" exact component={IdeaForm} />
-          <Route path="/ideas" component={IdeaManager} />
+          <Route path="/ideas" component={Ideas} />
           <Redirect from="/" to="/ideas" exact />
         </Switch>
       </main>
-      {props.children}
     </div>
   )
 };

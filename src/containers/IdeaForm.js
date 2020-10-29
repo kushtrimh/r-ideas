@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
 
-import { IconButton, makeStyles, Snackbar, SnackbarContent } from '@material-ui/core';
-import { Close } from '@material-ui/icons';
+import { makeStyles } from '@material-ui/core';
 import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
 
-import { database } from '../config/firebase-config';
+import Alert from '../components/ui/Alert';
+import { useDatabase } from '../config/firebase-config';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -25,21 +25,14 @@ const useStyles = makeStyles((theme) => ({
   },
   button: {
     width: 'max-content'
-  },
-  alertError: {
-    backgroundColor: theme.palette.warning.main
-  },
-  alertSuccess: {
-    backgroundColor: theme.palette.success.main
-  },
-  closeIcon: {
-    color: theme.palette.common.white
   }
 }));
 
 function IdeaForm(props) {
 
   const classes = useStyles();
+
+  const database = useDatabase();
 
   const [idea, setIdea] = useState({
     title: '',
@@ -76,12 +69,12 @@ function IdeaForm(props) {
       let responseAlert = {}
       if (error) {
         responseAlert = {
-          className: classes.alertError,
+          type: 'error',
           message: `Could not add idea. ${error}`
         }
       } else {
         responseAlert = {
-          className: classes.alertSuccess,
+          type: 'success',
           message: 'Idea added successfully!'
         }
         setIdea({ title: '', content: '', createAt: null });
@@ -127,29 +120,11 @@ function IdeaForm(props) {
   let alertComponent = null;
   if (alert) {
     alertComponent = (
-      <Snackbar
-        anchorOrigin={{
-          vertical: 'top',
-          horizontal: 'center'
-        }}
-        className={alert.className}
-        open
-        variant="filled"
-        autoHideDuration={6500}
-        message={alert.message}>
-        <SnackbarContent
-          className={alert.className}
-          message={alert.message}
-          action={
-            <IconButton 
-              size="small" 
-              onClick={handleAlertClose}
-              className={classes.closeIcon}>
-              <Close fontSize="small" />
-            </IconButton>
-          }>
-        </SnackbarContent>
-      </Snackbar>
+      <Alert
+        open={true}
+        onClose={handleAlertClose}
+        message={alert.message}
+        type={alert.type} />
     );
   }
 
@@ -159,7 +134,7 @@ function IdeaForm(props) {
       <form className={classes.root} onSubmit={handleSubmit}>
         <TextField 
           name="title"
-          required
+          required 
           placeholder="Title"
           label={errors.title}
           error={Boolean(errors.title)}
@@ -174,16 +149,11 @@ function IdeaForm(props) {
           multiline={true}
           label={errors.content}
           error={Boolean(errors.content)}
-          value={idea.content}
-          rows={5}
+          value={idea.content} rows={5}
           variant="outlined"
           onChange={handleIdeaAttributeChange} />
-        <Button 
-          type="submit"
-          variant="contained" 
-          color="primary"
-          className={classes.button}
-          disabled={!isValid()}>
+        <Button type="submit" variant="contained" color="primary"
+          className={classes.button} disabled={!isValid()}>
           Add Idea
         </Button>
       </form>

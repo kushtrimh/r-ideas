@@ -1,0 +1,1 @@
+export const SET_IDEAS = 'SET_IDEAS';
