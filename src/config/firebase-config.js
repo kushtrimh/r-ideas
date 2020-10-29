@@ -1,7 +1,10 @@
-import firebase from 'firebase/app';
+import { useSelector, useDispatch } from 'react-redux';
 
+import firebase from 'firebase/app';
 import 'firebase/auth';
 import 'firebase/database';
+
+import { ADD_FIREBASE_DATABASE } from '../store/actions';
 
 const { REACT_APP_FRB_API_KEY, REACT_APP_FRB_AUTH_DOMAIN,
   REACT_APP_FRB_DB_URL, REACT_APP_FRB_PROJECT_ID,
@@ -21,7 +24,15 @@ const firebaseConfig = {
 
 firebase.initializeApp(firebaseConfig);
 
-const database = firebase.database();
-
 export default firebase;
-export { database };
+
+export function useDatabase() {
+  const dispatch = useDispatch();
+  const database = useSelector(state => state.firebase.database);
+  if (!database) {
+    const newDatabase = firebase.database();
+    dispatch({type: ADD_FIREBASE_DATABASE, payload: { database: newDatabase }});
+    return newDatabase;
+  }
+  return database;
+}

@@ -44,15 +44,10 @@ function ApplicationBar(props) {
   const classes = useStyles();
 
   return (
-    <AppBar
-      position="fixed"
+    <AppBar position="fixed"
       className={[classes.appBar, props.shifted ? classes.appBarShift : null].join(' ')}>
       <Toolbar>
-        <IconButton
-          color="inherit"
-          aria-label="shift"
-          onClick={props.shift}
-          edge="start"
+        <IconButton color="inherit" aria-label="shift" onClick={props.shift} edge="start"
           className={[classes.menuButton, props.shifted ? classes.hide : null].join(' ')}>
           <MenuIcon />
         </IconButton>

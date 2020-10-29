@@ -47,16 +47,9 @@ function SideBar(props) {
     { color: 'primary', text: 'Ideas', to: '/ideas' },
     { color: 'secondary', text: 'Add New Idea', to: '/ideas/add' }
   ].map(button => (
-    <Link
-      key={button.to}
-      to={button.to}
-      component={RouterLink}>
-      <SideBarButton
-        variant="contained"
-        color={button.color}>
-        <Typography
-          align="center"
-          variant="button">
+    <Link key={button.to} to={button.to} component={RouterLink}>
+      <SideBarButton variant="contained" color={button.color}>
+        <Typography align="center" variant="button">
           {button.text}
         </Typography>
       </SideBarButton>
@@ -64,11 +57,8 @@ function SideBar(props) {
   ));
 
   return (
-    <Drawer
-      open={props.open}
-      variant="persistent"
-      anchor="left"
-      className={classes.drawer}
+    <Drawer open={props.open} variant="persistent" anchor="left"
+      className={classes.drawer} 
       classes={{
         paper: classes.drawerPaper
       }}>

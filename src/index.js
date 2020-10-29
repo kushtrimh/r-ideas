@@ -1,10 +1,26 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import { createStore, combineReducers } from 'redux';
+import { Provider } from 'react-redux';
+
 import App from './App';
+import tagReducer from './store/reducer/tag-reducer';
+import ideaReducer from './store/reducer/idea-reducer';
+import firebaseReducer from './store/reducer/firebase-reducer';
 import * as serviceWorker from './serviceWorker';
 
+const rootReducer = combineReducers({
+  tag: tagReducer,
+  idea: ideaReducer,
+  firebase: firebaseReducer
+});
+
+const store = createStore(rootReducer);
+
 ReactDOM.render(
-  <App />,
+  <Provider store={store}>
+    <App />
+  </Provider>,
   document.getElementById('root')
 );
 
