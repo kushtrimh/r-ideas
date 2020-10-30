@@ -1,15 +1,18 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { Container } from '@material-ui/core';
 
-import Alert from '../components/ui/Alert';
 import Idea from '../components/ideas/Idea';
+import { useAlert } from '../hooks/ui-hooks';
 import { useDatabase } from '../config/firebase-config';
 import { SET_IDEAS } from '../store/actions';
 
 function Ideas() {
 
-  const [loadError, setLoadError] = useState(false);
+  const [alert, setAlertProps] = useAlert({
+    type: 'error',
+    message: 'Could not load ideas, please try again later'
+  });
 
   const ideas = useSelector(state => state.idea.ideas);
   const dispatch = useDispatch();
@@ -28,7 +31,7 @@ function Ideas() {
       dispatch({ type: SET_IDEAS, payload: { ideas: queriedIdeasList.reverse() } })
     }, error => {
       if (error) {
-        setLoadError(true);
+        setAlertProps({ open: true });
         console.error(error.message);
       }
     });
@@ -41,10 +44,7 @@ function Ideas() {
 
   return (
     <Container>
-      {loadError ? (
-        <Alert type="error" onClose={() => setLoadError(false)}
-          message="Could not load ideas, please try again later" open={loadError} />
-      ) : null}
+      {alert}
       <div>
         {ideaComponents}
       </div>
