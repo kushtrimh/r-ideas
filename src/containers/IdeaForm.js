@@ -4,7 +4,7 @@ import { makeStyles } from '@material-ui/core';
 import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
 
-import Alert from '../components/ui/Alert';
+import { useAlert } from '../hooks/ui-hooks';
 import { useDatabase } from '../config/firebase-config';
 
 const useStyles = makeStyles((theme) => ({
@@ -43,11 +43,8 @@ function IdeaForm(props) {
     title: '',
     content: ''
   });
-  const [alert, setAlert] = useState(null);
+  const [alert, setAlertProps] = useAlert({});
 
-  function handleAlertClose() {
-    setAlert(null);
-  }
 
   function handleIdeaAttributeChange(e) {
     const name = e.target.name;
@@ -66,21 +63,21 @@ function IdeaForm(props) {
       ...idea,
       createdAt: Date.now()
     }, (error) => {
-      let responseAlert = {}
       if (error) {
-        responseAlert = {
+        setAlertProps({
+          open: true,
           type: 'error',
           message: `Could not add idea. ${error}`
-        }
+        });
       } else {
-        responseAlert = {
+        setAlertProps({
+          open: true,
           type: 'success',
           message: 'Idea added successfully!'
-        }
+        });
         setIdea({ title: '', content: '', createAt: null });
         setErrors({ title: '', content: '' });
       }
-      setAlert(responseAlert);
     });
   }
 
@@ -117,20 +114,9 @@ function IdeaForm(props) {
       .every(message => message === null);
   }
 
-  let alertComponent = null;
-  if (alert) {
-    alertComponent = (
-      <Alert
-        open={true}
-        onClose={handleAlertClose}
-        message={alert.message}
-        type={alert.type} />
-    );
-  }
-
   return (
     <React.Fragment>
-      {alertComponent}
+      {alert}
       <form className={classes.root} onSubmit={handleSubmit}>
         <TextField 
           name="title"
