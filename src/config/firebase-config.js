@@ -4,7 +4,7 @@ import firebase from 'firebase/app';
 import 'firebase/auth';
 import 'firebase/database';
 
-import { ADD_FIREBASE_DATABASE } from '../store/actions';
+import { addFirebaseDatabase } from '../store/actions/actions';
 
 const { REACT_APP_FRB_API_KEY, REACT_APP_FRB_AUTH_DOMAIN,
   REACT_APP_FRB_DB_URL, REACT_APP_FRB_PROJECT_ID,
@@ -31,7 +31,7 @@ export function useDatabase() {
   const database = useSelector(state => state.firebase.database);
   if (!database) {
     const newDatabase = firebase.database();
-    dispatch({type: ADD_FIREBASE_DATABASE, payload: { database: newDatabase }});
+    dispatch(addFirebaseDatabase({ database: newDatabase }));
     return newDatabase;
   }
   return database;

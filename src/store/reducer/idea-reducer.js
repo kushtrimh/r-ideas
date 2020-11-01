@@ -1,4 +1,4 @@
-import * as actions from '../actions';
+import * as actionTypes from '../actions/actionTypes';
 
 const initialState = {
   ideas: []
@@ -6,7 +6,7 @@ const initialState = {
 
 function ideaReducer(state = initialState, action) {
   switch (action.type) {
-    case actions.SET_IDEAS:
+    case actionTypes.SET_IDEAS:
       return {
         ...state,
         ideas: action.payload.ideas
