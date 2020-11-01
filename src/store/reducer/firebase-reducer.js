@@ -1,4 +1,4 @@
-import * as actions from '../actions';
+import * as actionTypes from '../actions/actionTypes';
 
 const initialState = {
   database: null
@@ -6,7 +6,7 @@ const initialState = {
 
 function firebaseReducer(state = initialState, action) {
   switch (action.type) {
-    case actions.ADD_FIREBASE_DATABASE:
+    case actionTypes.ADD_FIREBASE_DATABASE:
       return {
         ...state,
         database: action.payload.database
