@@ -19,7 +19,6 @@ export function useAlert(props) {
 
   function handleClose() {
     updateAlertProps({ open: false });
-    console.log('closed');
   }
 
   useEffect(() => {

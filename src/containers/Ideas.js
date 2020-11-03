@@ -5,7 +5,7 @@ import { Container } from '@material-ui/core';
 import Idea from '../components/ideas/Idea';
 import { useAlert } from '../hooks/ui-hooks';
 import { useDatabase } from '../config/firebase-config';
-import { SET_IDEAS } from '../store/actions';
+import { setIdeas } from '../store/actions/actions';
 
 function Ideas() {
 
@@ -28,7 +28,7 @@ function Ideas() {
         idea.id = ideaId;
         queriedIdeasList.push(idea);
       }
-      dispatch({ type: SET_IDEAS, payload: { ideas: queriedIdeasList.reverse() } })
+      dispatch(setIdeas({ ideas: queriedIdeasList.reverse() }));
     }, error => {
       if (error) {
         setAlertProps({ open: true });
