@@ -1,5 +1,5 @@
 import React from 'react';
-import { makeStyles, Card, Typography, CardContent } from '@material-ui/core';
+import { makeStyles, Card, Typography, CardContent, Chip } from '@material-ui/core';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -23,8 +23,15 @@ const useStyles = makeStyles((theme) => ({
     marginBottom: theme.spacing(4)
   },
   createdDate: {
-    fontSize: 14,
-    float: 'right'
+    fontSize: 14
+  },
+  tags: {
+    marginTop: theme.spacing(2),
+    display: 'block'
+  },
+  tag: {
+    color: theme.palette.common.white,
+    margin: theme.spacing(0, 0.25)
   }
 }));
 
@@ -45,6 +52,15 @@ function Idea(props) {
           <Typography color="secondary" className={classes.createdDate}>
             {new Date(props.createdDate).toDateString()}
           </Typography>
+          <div className={classes.tags}>
+            {props.tags ? props.tags.map(tag => (
+              <Chip
+                className={classes.tag}
+                key={tag}
+                color="secondary"
+                label={tag} />
+            )) : null}
+          </div>
         </CardContent>
       </Card>
     </div>
