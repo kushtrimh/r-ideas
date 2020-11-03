@@ -4,6 +4,7 @@ import { makeStyles } from '@material-ui/core';
 import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
 
+import TagInput from '../components/tags/TagInput';
 import { useAlert } from '../hooks/ui-hooks';
 import { useDatabase } from '../config/firebase-config';
 
@@ -37,8 +38,9 @@ function IdeaForm(props) {
   const [idea, setIdea] = useState({
     title: '',
     content: '',
-    createdAt: null,
+    createdAt: null
   });
+  const [tags, setTags] = useState([]);
   const [errors, setErrors] = useState({
     title: '',
     content: ''
@@ -61,6 +63,7 @@ function IdeaForm(props) {
     const ideaKey = database.ref('ideas').push().key;
     database.ref(`ideas/${ideaKey}`).set({
       ...idea,
+      tags: tags,
       createdAt: Date.now()
     }, (error) => {
       if (error) {
@@ -77,8 +80,22 @@ function IdeaForm(props) {
         });
         setIdea({ title: '', content: '', createAt: null });
         setErrors({ title: '', content: '' });
+        setTags([]);
       }
     });
+  }
+
+  function handleTagAdd(tag) {
+    const existingTags = [...tags];
+    if (!existingTags.includes(tag)) {
+      existingTags.push(tag);
+    }
+    setTags(existingTags);
+  }
+
+  function handleTagDelete(tag) {
+    const existingTags = tags.filter(existingTag => existingTag !== tag);
+    setTags(existingTags);
   }
 
   function updateIdeaValidationErrors(name, value) {
@@ -138,6 +155,10 @@ function IdeaForm(props) {
           value={idea.content} rows={5}
           variant="outlined"
           onChange={handleIdeaAttributeChange} />
+        <TagInput 
+          tags={tags}
+          onTagAdd={handleTagAdd}
+          onTagDelete={handleTagDelete} />
         <Button type="submit" variant="contained" color="primary"
           className={classes.button} disabled={!isValid()}>
           Add Idea

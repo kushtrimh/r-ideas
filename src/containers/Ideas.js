@@ -39,7 +39,7 @@ function Ideas() {
 
   const ideaComponents = ideas.map(idea => (
     <Idea key={idea.id} title={idea.title} content={idea.content}
-      createdDate={idea.createdAt} />
+      createdDate={idea.createdAt} tags={idea.tags} />
   ));
 
   return (
