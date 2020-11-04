@@ -5,3 +5,7 @@ export {
 export {
   addFirebaseDatabase
 } from './firebase';
+
+export {
+  addTags
+} from './tag';
