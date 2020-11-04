@@ -7,6 +7,8 @@ import {
 } from '@material-ui/core';
 import { ChevronLeft } from '@material-ui/icons';
 
+import Tags from '../containers/Tags';
+
 const useStyles = makeStyles((theme) => ({
   drawer: props => ({
     width: props.width,
@@ -69,6 +71,7 @@ function SideBar(props) {
       <div className={classes.buttonContainer}>
         {buttons}
       </div>
+      <Tags />
     </Drawer>
   )
 };
