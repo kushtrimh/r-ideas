@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { Container } from '@material-ui/core';
+import { Container, Typography } from '@material-ui/core';
 
 import Idea from '../components/ideas/Idea';
 import { useAlert } from '../hooks/ui-hooks';
@@ -37,16 +37,16 @@ function Ideas() {
     });
   }, []);
 
-  const ideaComponents = ideas.map(idea => (
+  const ideasComponents = ideas.length > 0 ? ideas.map(idea => (
     <Idea key={idea.id} title={idea.title} content={idea.content}
       createdDate={idea.createdAt} tags={idea.tags} />
-  ));
+  )) : <Typography style={{textAlign: 'center'}} variant="h4" color="secondary">No ideas added yet!</Typography>;
 
   return (
     <Container>
       {alert}
       <div>
-        {ideaComponents}
+        {ideasComponents}
       </div>
     </Container>
   );

@@ -3,10 +3,12 @@ import React, { useState } from 'react';
 import { makeStyles } from '@material-ui/core';
 import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
+import { useSelector, useDispatch } from 'react-redux';
 
 import TagInput from '../components/tags/TagInput';
 import { useAlert } from '../hooks/ui-hooks';
 import { useDatabase } from '../config/firebase-config';
+import { addTags } from '../store/actions/actions';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -29,11 +31,14 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
-function IdeaForm(props) {
+function IdeaForm() {
 
   const classes = useStyles();
 
   const database = useDatabase();
+
+  const existingTags = useSelector(state => state.tag.tags);
+  const dispatch = useDispatch();
 
   const [idea, setIdea] = useState({
     title: '',
@@ -60,12 +65,22 @@ function IdeaForm(props) {
 
   function handleSubmit(e) {
     e.preventDefault();
+
     const ideaKey = database.ref('ideas').push().key;
-    database.ref(`ideas/${ideaKey}`).set({
+    const ideaData = {
       ...idea,
       tags: tags,
       createdAt: Date.now()
-    }, (error) => {
+    };
+
+    const tagsData = {}
+    existingTags.forEach(tag => tagsData[tag] = true);
+    tags.forEach(tag => tagsData[tag] = true);
+
+    var updates = {};
+    updates[`ideas/${ideaKey}`] = ideaData;
+    updates['tags/'] = tagsData;
+    database.ref().update(updates, (error) => {
       if (error) {
         setAlertProps({
           open: true,
@@ -81,6 +96,7 @@ function IdeaForm(props) {
         setIdea({ title: '', content: '', createAt: null });
         setErrors({ title: '', content: '' });
         setTags([]);
+        dispatch(addTags({tags: tags}));
       }
     });
   }
@@ -99,7 +115,7 @@ function IdeaForm(props) {
   }
 
   function updateIdeaValidationErrors(name, value) {
-    const ideaErrors = {...errors};
+    const ideaErrors = { ...errors };
     const message = validateIdea(name, value);
     ideaErrors[name] = message;
     setErrors(ideaErrors);
@@ -135,9 +151,9 @@ function IdeaForm(props) {
     <React.Fragment>
       {alert}
       <form className={classes.root} onSubmit={handleSubmit}>
-        <TextField 
+        <TextField
           name="title"
-          required 
+          required
           placeholder="Title"
           label={errors.title}
           error={Boolean(errors.title)}
@@ -155,7 +171,7 @@ function IdeaForm(props) {
           value={idea.content} rows={5}
           variant="outlined"
           onChange={handleIdeaAttributeChange} />
-        <TagInput 
+        <TagInput
           tags={tags}
           onTagAdd={handleTagAdd}
           onTagDelete={handleTagDelete} />
